@@ -31,7 +31,7 @@ class GraphAttention(nn.Module):
         bias = bias.unsqueeze(1).repeat(1, self.num_heads, 1, 1)
         # now bias size is (N, num_heads, L, L)
         
-        # 多头注意力 + 残差
+        # MHA + resi
         res = x
         x = self.ln_attn(x)  
         x, attn_weights = self.calc_attn(query=x, attn_bias=bias, mask=key_padding_mask)
@@ -39,7 +39,7 @@ class GraphAttention(nn.Module):
         x = self.dropout_module(x)
         x += res
         
-        # 前馈网络 + 残差
+        # FFN + 残差
         res = x
         x = self.ln_ffn(x)  
         x = self.relu(self.fc1(x))
