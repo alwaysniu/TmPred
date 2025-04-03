@@ -39,7 +39,7 @@ class GraphAttention(nn.Module):
         x = self.dropout_module(x)
         x += res
         
-        # FFN + 残差
+        # FFN + resi
         res = x
         x = self.ln_ffn(x)  
         x = self.relu(self.fc1(x))
